@@ -42,6 +42,7 @@ public class Console {
     public String getPromptLine(String prompt, boolean forceLower) {
         String line = "";
 
+        System.out.println();
         System.out.printf("%s:  ", prompt);
         try {
             line = mReader.readLine().trim();
@@ -55,5 +56,24 @@ public class Console {
     }
 
 
+    public void verticleSpace(int lines) {
+        for (int i=0; i<lines; i++) {
+            System.out.println();
+        }
+    }
 
+    public void clearAndPrint(String s) {
+        clear();
+        System.out.println(s);
+    }
+
+    public void printParagraph(String s) {
+        System.out.println();
+        System.out.println(s);
+    }
+
+    public void waitForReturn() {
+        System.out.println();
+        getPromptLine("Press 'Enter' to continue");
+    }
 }
