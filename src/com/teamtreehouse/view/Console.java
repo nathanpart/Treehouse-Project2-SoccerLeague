@@ -18,21 +18,9 @@ public class Console {
     }
 
     public void clear() {
-        ProcessBuilder clearCmd;
-        Runtime rt = Runtime.getRuntime();
-        try {
-            if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                clearCmd = new ProcessBuilder("clr");
-
-            } else {
-                clearCmd = new ProcessBuilder("clear");
-            }
-            clearCmd.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-            clearCmd.start();
-        } catch (IOException e) {
-            //Not able to call clear command
-            e.printStackTrace();
-        }
+        //Send control codes to console terminal to clear screen
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public String getPromptLine(String prompt) {
