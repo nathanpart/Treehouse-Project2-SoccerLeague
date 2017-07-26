@@ -73,4 +73,10 @@ public class Team {
         }
         return ((double) experienceCount / (double) mPlayers.size()) * 100;
     }
+
+    public void removePlayer(Player player) {
+        if (mPlayers.contains(player)) {
+            mPlayers.remove(player);
+        }
+    }
 }

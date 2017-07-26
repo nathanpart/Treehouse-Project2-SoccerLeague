@@ -52,6 +52,7 @@ public class Player implements Comparable<Player>, Serializable {
                 + "\" Prior Experience: " + (isPreviousExperience() ? "yes" : "no")
                 + ")";
 
+
     }
 
     @Override

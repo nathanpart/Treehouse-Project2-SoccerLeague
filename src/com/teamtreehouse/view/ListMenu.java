@@ -1,21 +1,26 @@
 package com.teamtreehouse.view;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ListMenu {
+public class ListMenu<E> {
     private String mHeading;
     private String mBackOption;
     private Console mConsole;
     private List<String> mMenuItems;
 
-    public ListMenu(Console console, List<String> items, String heading, String backOption) {
+    public ListMenu(Console console, Collection<E> items, String heading, String backOption) {
         mConsole = console;
-        mMenuItems = items;
         mHeading = heading;
         mBackOption = backOption;
+        mMenuItems = new ArrayList<>();
+        for (E item: items) {
+            mMenuItems.add(item.toString());
+        }
     }
 
-    public int GetSelection() {
+    public int getSelection() {
         int selection = 0;
         int lowEnd = 0;
         do {
