@@ -77,4 +77,8 @@ public class Player implements Comparable<Player>, Serializable {
         result = 31 * result + (previousExperience ? 1 : 0);
         return result;
     }
+
+    public String getFullName() {
+        return String.format("%s, %s", lastName, firstName);
+    }
 }

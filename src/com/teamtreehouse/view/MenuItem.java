@@ -10,12 +10,14 @@ public class MenuItem < E extends Enum> {
     private String mDisplay;
     private Pattern mSelector;
     private String mSelectText;
+    private boolean mEnabledFlag;
 
     public MenuItem(E item, String displayStr, String selectPattern, String selectText) {
         mMenuItem = item;
         mDisplay = displayStr;
         mSelector = Pattern.compile(selectPattern);
         mSelectText = selectText;
+        mEnabledFlag = true;
     }
 
     public String getDisplayText() {
@@ -32,5 +34,17 @@ public class MenuItem < E extends Enum> {
 
     public E getMenuItem() {
         return mMenuItem;
+    }
+
+    public void disableItem() {
+        mEnabledFlag = false;
+    }
+
+    public void enableItem() {
+        mEnabledFlag = true;
+    }
+
+    public boolean isEnabled() {
+        return mEnabledFlag;
     }
 }
