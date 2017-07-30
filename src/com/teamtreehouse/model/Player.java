@@ -62,10 +62,10 @@ public class Player implements Comparable<Player>, Serializable {
 
         Player player = (Player) o;
 
-        if (heightInInches != player.heightInInches) return false;
-        if (previousExperience != player.previousExperience) return false;
-        if (!firstName.equals(player.firstName)) return false;
-        return lastName.equals(player.lastName);
+        return heightInInches == player.heightInInches &&
+                previousExperience == player.previousExperience &&
+                firstName.equals(player.firstName) &&
+                lastName.equals(player.lastName);
 
     }
 
@@ -80,5 +80,16 @@ public class Player implements Comparable<Player>, Serializable {
 
     public String getFullName() {
         return String.format("%s, %s", lastName, firstName);
+    }
+
+    public String getFullNameHeight() {
+        return String.format("%-30s Height: %2d\"", getFullName(), getHeightInInches());
+    }
+
+    public String getFullNameStats() {
+        return String.format("%-30s Height: %2d\" %s",
+                getFullName(),
+                getHeightInInches(),
+                (isPreviousExperience() ? "experience" : ""));
     }
 }

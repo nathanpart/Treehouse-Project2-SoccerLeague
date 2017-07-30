@@ -1,7 +1,10 @@
 package com.teamtreehouse.model;
 
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 public class Team {
 
@@ -16,19 +19,19 @@ public class Team {
 
     private String mTeamName;
     private String mCoach;
-    private Set<Player> mPlayers;
+    private Players mPlayers;
 
     public Team(String teamName, String coach) {
         mTeamName = teamName;
         mCoach = coach;
-        mPlayers = new TreeSet<Player>();
+        mPlayers = new Players();
     }
 
     public void addPlayer(Player player) {
-        mPlayers.add(player);
+        mPlayers.addPlayer(player);
     }
 
-    public Set<Player> getPlayers() {
+    public Players getPlayers() {
         return mPlayers;
     }
 
@@ -36,24 +39,16 @@ public class Team {
         return mTeamName;
     }
 
-    public String getCoash() {
+    public String getCoach() {
         return mCoach;
     }
 
     //Returns team's average player height
     public int getAverageHeight() {
-        int sumHeights = 0;
-
-        //If no players in team report 0 and avoid division by 0
-        if (mPlayers.size() == 0) {
-            return 0;
-        }
-
-        for (Player player : mPlayers) {
-            sumHeights += player.getHeightInInches();
-        }
-
-        return sumHeights / mPlayers.size();
+        OptionalDouble average = mPlayers.getPlayers().stream()
+                .mapToInt(Player::getHeightInInches)
+                .average();
+        return average.isPresent() ? new Double(average.getAsDouble()).intValue() : 0;
     }
 
 
@@ -62,21 +57,30 @@ public class Team {
         int experienceCount = 0;
 
         //If no players in team report no experience.
-        if (mPlayers.size() == 0) {
+        if (mPlayers.getPlayers().size() == 0) {
             return 0;
         }
 
-        for (Player player : mPlayers) {
-            if (player.isPreviousExperience()) {
-                experienceCount += 1;
-            }
-        }
-        return ((double) experienceCount / (double) mPlayers.size()) * 100;
+        return ((double) mPlayers.getPlayersWithExperience().size() / (double) mPlayers.getPlayers().size()) * 100;
     }
 
     public void removePlayer(Player player) {
-        if (mPlayers.contains(player)) {
-            mPlayers.remove(player);
+        if (mPlayers.hasPlayer(player)) {
+            mPlayers.removePlayer(player);
         }
+    }
+
+
+    public String getTeamNameWithStats() {
+        return String.format("%20s %Coach: %-20s Average Height: %2d\" Average Experience Level %2.1f%%",
+                getName(),
+                getCoach(),
+                getAverageHeight(),
+                getExperienceLevel()
+        );
+    }
+
+    public String getTeamNameWithCoach() {
+        return String.format("%s coached by %s", getName(), getCoach());
     }
 }
