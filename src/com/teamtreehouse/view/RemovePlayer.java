@@ -18,8 +18,6 @@ public class RemovePlayer extends ReportView{
         super(console, "Remove Player From A Team", teams, players);
 
         //Creat menu lists
-        mPlayerList = players.getPlayers();
-        mTeamList = teams.getTeamsListSorted(Teams.SortOptions.NAME, true);
 
         //Create global menu options
         List<String> playerGlobalOptions = new ArrayList<>();
@@ -56,9 +54,11 @@ public class RemovePlayer extends ReportView{
 
         do {
             if (isTeamMenu) {
-                selection = mTeamMenu.getSelection();
+                mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true);
+                selection = mTeamMenu.getSelection(mTeamList);
             } else {
-                selection = mPlayerMenu.getSelection();
+                mPlayerList = mAvailablePlayers.getPlayersList();
+                selection = mPlayerMenu.getSelection(mPlayerList);
             }
 
             //Handle the return to main menu global option

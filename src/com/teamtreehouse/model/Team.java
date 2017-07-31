@@ -1,10 +1,6 @@
 package com.teamtreehouse.model;
 
-import java.util.List;
 import java.util.OptionalDouble;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Function;
 
 public class Team {
 
@@ -31,7 +27,7 @@ public class Team {
         mPlayers.addPlayer(player);
     }
 
-    public Players getPlayers() {
+    public Players getTeamPlayers() {
         return mPlayers;
     }
 
@@ -45,23 +41,20 @@ public class Team {
 
     //Returns team's average player height
     public int getAverageHeight() {
-        OptionalDouble average = mPlayers.getPlayers().stream()
+        OptionalDouble average = mPlayers.getPlayersList().stream()
                 .mapToInt(Player::getHeightInInches)
                 .average();
-        return average.isPresent() ? new Double(average.getAsDouble()).intValue() : 0;
+        return average.isPresent() ? (int) Math.round(average.getAsDouble()) : 0;
     }
-
 
     //Return percentage of team that has previous experence
     public double getExperienceLevel() {
-        int experienceCount = 0;
-
-        //If no players in team report no experience.
-        if (mPlayers.getPlayers().size() == 0) {
+        //If no players in team, report no experience.
+        if (mPlayers.getPlayerCount() == 0) {
             return 0;
         }
 
-        return ((double) mPlayers.getPlayersWithExperience().size() / (double) mPlayers.getPlayers().size()) * 100;
+        return ((double) mPlayers.getPlayersWithExperience().size() / (double) mPlayers.getPlayerCount()) * 100;
     }
 
     public void removePlayer(Player player) {
@@ -72,7 +65,7 @@ public class Team {
 
 
     public String getTeamNameWithStats() {
-        return String.format("%20s %Coach: %-20s Average Height: %2d\" Average Experience Level %2.1f%%",
+        return String.format("%20s Coach: %-20s Average Height: %2d\" Average Experience Level %2.1f%%",
                 getName(),
                 getCoach(),
                 getAverageHeight(),
@@ -82,5 +75,9 @@ public class Team {
 
     public String getTeamNameWithCoach() {
         return String.format("%s coached by %s", getName(), getCoach());
+    }
+
+    public int getPlayerCount() {
+        return mPlayers.getPlayerCount();
     }
 }

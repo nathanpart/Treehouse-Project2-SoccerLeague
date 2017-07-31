@@ -7,6 +7,7 @@ import com.teamtreehouse.model.Teams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddPlayer extends ReportView{
     private ListMenu<Player> mPlayerMenu;
@@ -17,9 +18,9 @@ public class AddPlayer extends ReportView{
     public AddPlayer(Console console, Teams teams, Players players) {
         super(console, "Add A Player", teams, players);
 
-        //Creat menu lists
-        mPlayerList = players.getPlayers();
-        mTeamList = teams.getTeamsListSorted(Teams.SortOptions.NAME, true);
+        //We pass the menus an updated lists when we get a selection
+        mPlayerList = null;
+        mTeamList = null;
 
         //Create global menu options
         List<String> playerGlobalOptions = new ArrayList<>();
@@ -55,9 +56,16 @@ public class AddPlayer extends ReportView{
 
         do {
             if (isPlayerMenu) {
-                selection = mPlayerMenu.getSelection();
+                mPlayerList = mAvailablePlayers.getPlayersList();
+                selection = mPlayerMenu.getSelection(mPlayerList);
             } else {
-                selection = mTeamMenu.getSelection();
+                // Get a list of teams sorted, but also apply the max 11 player restraint by removing
+                //  any teams with 11 players.  Hmm a job for filter
+                mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true).stream()
+                        .filter(t -> t.getPlayerCount() < 12)
+                        .collect(Collectors.toList());
+
+                selection = mTeamMenu.getSelection(mTeamList);
             }
 
             //Handle the return to main menu global option

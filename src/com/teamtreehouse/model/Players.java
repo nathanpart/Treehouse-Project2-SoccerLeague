@@ -69,7 +69,7 @@ public class Players {
     }
 
 
-    public List<Player> getPlayers() {
+    public List<Player> getPlayersList() {
         return new ArrayList<>(mPlayers);
     }
 
@@ -89,6 +89,10 @@ public class Players {
         return mPlayers.stream()
                 .sorted(Comparator.comparingInt(Player::getHeightInInches))
                 .collect(Collectors.toList());
+    }
+
+    public int getPlayerCount() {
+        return mPlayers.size();
     }
 
 }

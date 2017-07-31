@@ -17,7 +17,7 @@ public class ListTeams extends ReportView {
     public ListTeams(Console console, Teams teams, Players players) {
         super(console, "Team Reports By Height", teams, players);
 
-
+        mTeamList = null;
         List<String> mGlobalOptions = new ArrayList<>();
         mGlobalOptions.add("Exit to main menu");
 
@@ -34,7 +34,7 @@ public class ListTeams extends ReportView {
         int selection;
         mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true);
 
-        selection = mTeamMenu.getSelection();
+        selection = mTeamMenu.getSelection(mTeamList);
         if (selection < 0) {
             return;
         }
@@ -45,7 +45,7 @@ public class ListTeams extends ReportView {
                 team.getName(),
                 team.getCoach()));
         teamReport.append(String.format("%nList of player by height:%n"));
-        team.getPlayers().getPlayers().stream()
+        team.getTeamPlayers().getPlayersList().stream()
                 .sorted(Comparator.comparingInt(Player::getHeightInInches))
                 .map(Player::getFullNameStats)
                 .forEach(s ->teamReport.append(String.format("  %s%n", s)));

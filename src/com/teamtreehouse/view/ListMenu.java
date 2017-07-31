@@ -32,10 +32,27 @@ public class ListMenu<E> {
         mMenuItems = items;
         mGetItemString = getItemText;
         mParent = parent;
+    }
 
-        //Figure out how many pages need for list selection menu with 10 items per page
-        mPages = (new Double(Math.ceil(items.size() / 10.0))).intValue();
+
+    //Figure out how many pages need for list selection menu with 10 items per page
+    private void computePaging() {
+        mPages = (new Double(Math.ceil(mMenuItems.size() / 10.0))).intValue();
         mIsPaged = mPages != 1;
+    }
+
+    // Display and get menu selection from updated list
+    public int getSelection(List<E> items) {
+        mMenuItems = items;
+        return getSelection();
+    }
+
+
+    //Display and get menu selection from updated list and menu heading
+    public int getSelection(List<E> items, String heading) {
+        mMenuItems = items;
+        mHeading = heading;
+        return getSelection();
     }
 
     // Display and get the menus selection
@@ -43,6 +60,9 @@ public class ListMenu<E> {
         int currentPage = 1;
         int selection = 0;
         boolean menuFlag = true;
+
+        //Compute the paging for the menu we are showing
+        computePaging();
 
         //Loop until we have an item selected from the menu send back
         do {
@@ -86,7 +106,7 @@ public class ListMenu<E> {
         // Funtional stuff for inserting menu item lines into menu
         int itemNumber[] = {1};  //Menu line number in a array for functional closure
         Consumer<String> appendItem = item -> {
-            menuPage.append(String.format("  %d - %s%n", itemNumber[0], "Next Page"));
+            menuPage.append(String.format("  %d - %s%n", itemNumber[0], item));
             itemNumber[0]++;
         };
 

@@ -50,6 +50,10 @@ public class Teams {
 
     }
 
+    public int getNumberOfTeams() {
+        return mTeams.size();
+    }
+
     public boolean isEmpty() {
         return mTeams.isEmpty();
     }

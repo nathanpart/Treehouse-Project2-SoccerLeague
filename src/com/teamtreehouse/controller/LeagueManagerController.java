@@ -46,9 +46,15 @@ public class LeagueManagerController {
     public void run() {
         boolean runFlag = true;
         while (runFlag) {
-            handleTeamMenuState();
-            handlePlayerMenuState();
+
+            //Check and adjust which menu items are enabled or disabled
+            checkMenuState();
+            checkCreateTeamMenuState();
+
+            //Get a menu selection
             MenuOptions option = mMainMenu.getSelction();
+
+            //Dispatch to appropriate view class
             switch (option) {
                 case QUIT:
                     runFlag = false;
@@ -77,7 +83,8 @@ public class LeagueManagerController {
         }
     }
 
-    private void handleTeamMenuState() {
+    //With no teams created - Most menu options make no sense so disable them
+    private void checkMenuState() {
         if (mTeams.isEmpty()) {
             mMainMenu.disableMenuItem(MenuOptions.ADD_PLAYER);
             mMainMenu.disableMenuItem(MenuOptions.REMOVE_PLAYER);
@@ -93,8 +100,10 @@ public class LeagueManagerController {
         }
     }
 
-    private void handlePlayerMenuState() {
-        if (mAvailablePlayers.getPlayers().isEmpty()) {
+    //This handles the criteria of not add more teams than there are available players
+    //  if this is the case we just disable the "Create Team" menu option"
+    private void checkCreateTeamMenuState() {
+        if (mTeams.getNumberOfTeams() >= mAvailablePlayers.getPlayerCount()) {
             mMainMenu.disableMenuItem(MenuOptions.CREATE_TEAM);
         } else {
             mMainMenu.enableMenuItem(MenuOptions.CREATE_TEAM);

@@ -34,7 +34,7 @@ public class BalanceReport extends ReportView{
             int highBound[]    = {33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 100};
             int expCount = 0;
             int inExpCount = 0;
-            List<Player> players = team.getPlayers().getPlayers();
+            List<Player> players = team.getTeamPlayers().getPlayersList();
 
             for (Player player: players) {
                 int height = player.getHeightInInches();
