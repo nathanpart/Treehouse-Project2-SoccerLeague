@@ -40,15 +40,15 @@ public class Roster extends ReportView {
 
     private void displayTeamRoster(Team team) {
         StringBuilder rosterParagraph = new StringBuilder(String.format("%s%n", team.getTeamNameWithStats()));
-        rosterParagraph.append("   Players with experience:%n");
+        rosterParagraph.append(String.format("%n  Players with experience:%n"));
         team.getTeamPlayers()
                 .getPlayersWithExperience()
                 .forEach(player -> rosterParagraph.append(String.format("    %s%n", player.getFullNameHeight())));
-        rosterParagraph.append("  Players without experience:%n");
+        rosterParagraph.append(String.format("%n  Players without experience:%n"));
         team.getTeamPlayers()
                 .getPlayersWithoutExperience()
                 .forEach(player -> rosterParagraph.append(String.format("    %s%n", player.getFullNameHeight())));
-        rosterParagraph.append(String.format("Number of player: %d%n", team.getTeamPlayers().getPlayersList().size()));
+        rosterParagraph.append(String.format("%nNumber of player: %d%n", team.getTeamPlayers().getPlayersList().size()));
         mConsole.printParagraph(String.valueOf(rosterParagraph));
     }
 

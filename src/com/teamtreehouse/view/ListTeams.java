@@ -49,7 +49,7 @@ public class ListTeams extends ReportView {
                 .sorted(Comparator.comparingInt(Player::getHeightInInches))
                 .map(Player::getFullNameStats)
                 .forEach(s ->teamReport.append(String.format("  %s%n", s)));
-        teamReport.append(String.format("%nThe average experience level for this team is: %2.1f",
+        teamReport.append(String.format("%nThe average experience level for this team is: %2.1f%%",
                 team.getExperienceLevel()));
 
         mConsole.printParagraph(String.valueOf(teamReport));

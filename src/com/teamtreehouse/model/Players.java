@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 public class Players {
     private Set<Player> mPlayers;
+    private static int maxFullNameWidth;
+    private static int leaguePlayerCount;
 
     public Players() {
         mPlayers = new TreeSet<Player>();
@@ -15,6 +17,14 @@ public class Players {
         Player[] players = load();
         mPlayers.clear();
         Collections.addAll(mPlayers, players);
+
+        //Compute the width of full name to help with setting field width in text formatting
+        OptionalInt maxWdith = getPlayersList().stream()
+                .map(Player::getFullName)
+                .mapToInt(String::length)
+                .max();
+        maxFullNameWidth = maxWdith.isPresent() ? maxWdith.getAsInt() : 0;
+        leaguePlayerCount = mPlayers.size();
     }
 
     public static Player[] load() {
@@ -93,6 +103,14 @@ public class Players {
 
     public int getPlayerCount() {
         return mPlayers.size();
+    }
+
+    public static int getMaxFullNameWidth() {
+        return maxFullNameWidth;
+    }
+
+    public static int getLeaguePlayerCount() {
+        return leaguePlayerCount;
     }
 
 }

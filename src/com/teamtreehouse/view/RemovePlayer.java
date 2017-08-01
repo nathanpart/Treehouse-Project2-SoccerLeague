@@ -7,6 +7,7 @@ import com.teamtreehouse.model.Teams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RemovePlayer extends ReportView{
     private ListMenu<Player> mPlayerMenu;
@@ -54,10 +55,12 @@ public class RemovePlayer extends ReportView{
 
         do {
             if (isTeamMenu) {
-                mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true);
+                mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true).stream()
+                        .filter(t -> t.getPlayerCount() != 0)
+                        .collect(Collectors.toList());
                 selection = mTeamMenu.getSelection(mTeamList);
             } else {
-                mPlayerList = mAvailablePlayers.getPlayersList();
+                mPlayerList = team.getTeamPlayers().getPlayersList();
                 selection = mPlayerMenu.getSelection(mPlayerList);
             }
 

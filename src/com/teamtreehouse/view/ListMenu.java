@@ -70,14 +70,14 @@ public class ListMenu<E> {
             mConsole.printParagraph(generateMenuPage(currentPage));
 
             try {
-                selection = Integer.parseInt(mConsole.getPromptLine("Enter Selection:"));
+                selection = Integer.parseInt(mConsole.getPromptLine("Enter Selection"));
             } catch (NumberFormatException e) {
                 //User didn't enter a number - redisplay the menu and continue waiting
                 continue;
             }
 
             // Range check the result
-            if (selection < 1 || selection > mEnd) {
+            if (selection < 1 || selection >= mEnd) {
                 continue;
             }
 
@@ -106,7 +106,7 @@ public class ListMenu<E> {
         // Funtional stuff for inserting menu item lines into menu
         int itemNumber[] = {1};  //Menu line number in a array for functional closure
         Consumer<String> appendItem = item -> {
-            menuPage.append(String.format("  %d - %s%n", itemNumber[0], item));
+            menuPage.append(String.format("  %2d - %s%n", itemNumber[0], item));
             itemNumber[0]++;
         };
 

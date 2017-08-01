@@ -83,11 +83,14 @@ public class Player implements Comparable<Player>, Serializable {
     }
 
     public String getFullNameHeight() {
-        return String.format("%-30s Height: %2d\"", getFullName(), getHeightInInches());
+        String fmt = String.format("%%-%ds Height: %%2d\"", Players.getMaxFullNameWidth());
+        return String.format(fmt, getFullName(), getHeightInInches());
     }
 
     public String getFullNameStats() {
-        return String.format("%-30s Height: %2d\" %s",
+        String fmt = String.format("%%-%ds Height: %%2d\" %%s", Players.getMaxFullNameWidth());
+
+        return String.format(fmt,
                 getFullName(),
                 getHeightInInches(),
                 (isPreviousExperience() ? "experience" : ""));

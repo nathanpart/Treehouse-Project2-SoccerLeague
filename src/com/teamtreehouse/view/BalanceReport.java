@@ -49,7 +49,7 @@ public class BalanceReport extends ReportView{
                     inExpCount++;
                 }
             }
-            text.append(String.format("%-15s %2d      %2d  %2d  %2d%% %2d\"    ",
+            text.append(String.format("%-15s %-2d      %-2d  %-2d  %-2d%% %-2d\"    ",
                     team.getName(),
                     players.size(),
                     expCount,
@@ -58,7 +58,7 @@ public class BalanceReport extends ReportView{
                     team.getAverageHeight()));
 
             for (int height : heightCounts) {
-                text.append(String.format("%2d ", height));
+                text.append(String.format("%-2d ", height));
             }
             text.append(String.format("%n"));
         }

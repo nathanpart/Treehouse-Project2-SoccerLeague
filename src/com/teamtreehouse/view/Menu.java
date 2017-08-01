@@ -1,9 +1,6 @@
 package com.teamtreehouse.view;
 
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by nathan on 7/11/17.
@@ -24,9 +21,19 @@ public class Menu <E extends Enum<E>>{
     }
 
     public E getSelction() {
-        mConsole.clear();
+        boolean badSelection = false;
+        String selection = "";
+        OptionalInt hintLen = mMenuList.values().stream()
+                .mapToInt(item -> item.getSelectHint().length())
+                .max();
+        String itemFmt = String.format("%%-%ds - %%s%%n", (hintLen.isPresent() ? hintLen.getAsInt() : 0));
         while (true) {
+            mConsole.clear();
             System.out.println(mMenuTitle);
+            if (badSelection) {
+                System.out.printf("%n'%s' was an invalid selection.%n", selection);
+                badSelection = false;
+            }
             System.out.println();
             for (E key : mMenuList.keySet()) {
                 if (isEnabled(key) == false) {
@@ -34,9 +41,9 @@ public class Menu <E extends Enum<E>>{
                 }
                 String selectHint = mMenuList.get(key).getSelectHint();
                 String displayText = mMenuList.get(key).getDisplayText();
-                System.out.printf("%-10s - %s%n", selectHint, displayText);
+                System.out.printf(itemFmt, selectHint, displayText);
             }
-            String selection = mConsole.getPromptLine("Enter Selection", true);
+            selection = mConsole.getPromptLine("Enter Selection by type letters in () or the whole key without ()", true);
             for (E key : mMenuList.keySet()) {
                 if (isEnabled(key) == false) {
                     continue;
@@ -45,8 +52,7 @@ public class Menu <E extends Enum<E>>{
                     return key;
                 }
             }
-            mConsole.clear();
-            System.out.printf("Sorry, %s was an invalid selection. Please try again.", selection);
+            badSelection = true;
         }
     }
 
@@ -63,5 +69,7 @@ public class Menu <E extends Enum<E>>{
         return mMenuList.get(item).isEnabled();
     }
 
-
+    public void setMenuTitle(String title) {
+        mMenuTitle = title;
+    }
 }

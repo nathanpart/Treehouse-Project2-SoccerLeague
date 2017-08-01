@@ -62,7 +62,7 @@ public class AddPlayer extends ReportView{
                 // Get a list of teams sorted, but also apply the max 11 player restraint by removing
                 //  any teams with 11 players.  Hmm a job for filter
                 mTeamList = mTeams.getTeamsListSorted(Teams.SortOptions.NAME, true).stream()
-                        .filter(t -> t.getPlayerCount() < 12)
+                        .filter(t -> t.getPlayerCount() < 11)
                         .collect(Collectors.toList());
 
                 selection = mTeamMenu.getSelection(mTeamList);

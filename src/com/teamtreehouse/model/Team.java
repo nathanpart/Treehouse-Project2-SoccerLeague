@@ -65,7 +65,7 @@ public class Team {
 
 
     public String getTeamNameWithStats() {
-        return String.format("%20s Coach: %-20s Average Height: %2d\" Average Experience Level %2.1f%%",
+        return String.format("%s coached by %s - Average Height: %d\", Average Experience Level: %2.1f%%",
                 getName(),
                 getCoach(),
                 getAverageHeight(),
